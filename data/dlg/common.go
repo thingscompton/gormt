@@ -5,11 +5,11 @@ import (
 	"os/exec"
 
 	"github.com/jroimartin/gocui"
-	"github.com/xxjwxc/gormt/data/view/model"
-	"github.com/xxjwxc/gormt/data/view/model/genmysql"
-	"github.com/xxjwxc/gormt/data/view/model/gensqlite"
+	"github.com/thingscompton/gormt/data/view/model"
+	"github.com/thingscompton/gormt/data/view/model/genmysql"
+	"github.com/thingscompton/gormt/data/view/model/gensqlite"
 
-	"github.com/xxjwxc/gormt/data/config"
+	"github.com/thingscompton/gormt/data/config"
 
 	"github.com/xxjwxc/public/mylog"
 	"github.com/xxjwxc/public/tools"

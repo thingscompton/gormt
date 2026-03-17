@@ -1,7 +1,7 @@
 package dlg
 
 import (
-	"github.com/xxjwxc/gormt/data/view/genstruct"
+	"github.com/thingscompton/gormt/data/view/genstruct"
 	"github.com/xxjwxc/public/mycui"
 )
 
