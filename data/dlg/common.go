@@ -11,8 +11,8 @@ import (
 
 	"github.com/thingscompton/gormt/data/config"
 
-	"github.com/xxjwxc/public/mylog"
-	"github.com/xxjwxc/public/tools"
+	"github.com/thingscompton/gormt/public/mylog"
+	"github.com/thingscompton/gormt/public/tools"
 )
 
 func division(a int, b float32) int {

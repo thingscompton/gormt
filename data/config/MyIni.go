@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/xxjwxc/public/tools"
+	"github.com/thingscompton/gormt/public/tools"
 )
 
 // Config custom config struct

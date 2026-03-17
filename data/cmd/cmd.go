@@ -4,14 +4,14 @@ import (
 	"os"
 	"strings"
 
-	"github.com/xxjwxc/public/mylog"
+	"github.com/thingscompton/gormt/public/mylog"
 
 	"github.com/thingscompton/gormt/data/view/gtools"
 
 	"github.com/thingscompton/gormt/data/config"
 
 	"github.com/spf13/cobra"
-	"github.com/xxjwxc/public/mycobra"
+	"github.com/thingscompton/gormt/public/mycobra"
 	"gopkg.in/go-playground/validator.v9"
 )
 

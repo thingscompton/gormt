@@ -3,7 +3,7 @@ package dlg
 import (
 	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"github.com/thingscompton/gormt/data/config"
-	"github.com/xxjwxc/public/myi18n"
+	"github.com/thingscompton/gormt/public/myi18n"
 	"golang.org/x/text/language"
 )
 

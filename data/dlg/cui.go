@@ -6,13 +6,13 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/xxjwxc/public/tools"
+	"github.com/thingscompton/gormt/public/tools"
 
 	"github.com/thingscompton/gormt/data/config"
 
 	"github.com/jroimartin/gocui"
-	"github.com/xxjwxc/public/myclipboard"
-	"github.com/xxjwxc/public/mycui"
+	"github.com/thingscompton/gormt/public/myclipboard"
+	"github.com/thingscompton/gormt/public/mycui"
 )
 
 func nextView(g *gocui.Gui, v *gocui.View) error {

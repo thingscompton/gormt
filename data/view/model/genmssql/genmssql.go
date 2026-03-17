@@ -7,8 +7,8 @@ import (
 
 	"github.com/thingscompton/gormt/data/config"
 	"github.com/thingscompton/gormt/data/view/model"
-	"github.com/xxjwxc/public/mylog"
-	"github.com/xxjwxc/public/tools"
+	"github.com/thingscompton/gormt/public/mylog"
+	"github.com/thingscompton/gormt/public/tools"
 	"gorm.io/driver/sqlserver"
 	"gorm.io/gorm"
 )

@@ -8,8 +8,8 @@ import (
 
 	"github.com/thingscompton/gormt/data/config"
 	"github.com/thingscompton/gormt/data/view/model"
-	"github.com/xxjwxc/public/mysqldb"
-	"github.com/xxjwxc/public/tools"
+	"github.com/thingscompton/gormt/public/mysqldb"
+	"github.com/thingscompton/gormt/public/tools"
 )
 
 // MySQLModel mysql model from IModel

@@ -10,8 +10,8 @@ import (
 
 	"github.com/thingscompton/gormt/data/config"
 	"github.com/thingscompton/gormt/data/view/model"
-	"github.com/xxjwxc/public/mylog"
-	"github.com/xxjwxc/public/tools"
+	"github.com/thingscompton/gormt/public/mylog"
+	"github.com/thingscompton/gormt/public/tools"
 )
 
 // GetCnfModel get model interface. 获取model接口

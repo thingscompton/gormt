@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os/exec"
 
-	"github.com/xxjwxc/public/mylog"
+	"github.com/thingscompton/gormt/public/mylog"
 
 	"github.com/thingscompton/gormt/data/dlg"
 	"github.com/thingscompton/gormt/data/view/model"
@@ -14,7 +14,7 @@ import (
 	"github.com/thingscompton/gormt/data/view/model/genmssql"
 	"github.com/thingscompton/gormt/data/view/model/genmysql"
 	"github.com/thingscompton/gormt/data/view/model/gensqlite"
-	"github.com/xxjwxc/public/tools"
+	"github.com/thingscompton/gormt/public/tools"
 )
 
 // Execute exe the cmd

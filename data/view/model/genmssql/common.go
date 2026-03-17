@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/thingscompton/gormt/data/config"
-	"github.com/xxjwxc/public/mylog"
+	"github.com/thingscompton/gormt/public/mylog"
 
 	"github.com/thingscompton/gormt/data/view/model"
 )

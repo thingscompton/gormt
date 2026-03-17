@@ -8,7 +8,7 @@ import (
 
 	"github.com/thingscompton/gormt/data/view/cnf"
 
-	"github.com/xxjwxc/public/mybigcamel"
+	"github.com/thingscompton/gormt/public/mybigcamel"
 
 	"github.com/thingscompton/gormt/data/config"
 	"github.com/thingscompton/gormt/data/view/genfunc"

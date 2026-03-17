@@ -1,0 +1,201 @@
+package tools
+
+import (
+	"bufio"
+	"io"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+	"strings"
+
+	"github.com/thingscompton/gormt/public/mylog"
+)
+
+// CheckFileIsExist 检查目录是否存在
+func CheckFileIsExist(filename string) bool {
+	var exist = true
+	if _, err := os.Stat(filename); os.IsNotExist(err) {
+		exist = false
+	}
+	return exist
+}
+
+// BuildDir 创建目录
+func BuildDir(absDir string) error {
+	// 提取目录部分
+	dir := filepath.Dir(absDir)
+
+	// 如果目录为空（如传入的是当前目录下的文件），则使用当前目录
+	if dir == "." || dir == "" {
+		dir = "."
+	}
+
+	// 创建目录
+	return os.MkdirAll(dir, os.ModePerm)
+}
+
+// DeleteFile 删除文件或文件夹(软删除.不会真正删除.添加后缀.bak)
+func DeleteFile(absDir string) error {
+	absDir = strings.TrimSuffix(absDir, "\\")
+	absDir = strings.TrimSuffix(absDir, "/")
+	return os.Rename(absDir, absDir+".bak")
+	// return os.RemoveAll(absDir)
+}
+
+// DeleteFile 删除文件或文件夹(硬删除)
+func DeleteAbs(absDir string) error {
+	return os.RemoveAll(absDir)
+}
+
+// GetPathDirs 获取目录所有文件夹
+func GetPathDirs(absDir string) (re []string) {
+	if CheckFileIsExist(absDir) {
+		files, _ := ioutil.ReadDir(absDir)
+		for _, f := range files {
+			if f.IsDir() {
+				re = append(re, f.Name())
+			}
+		}
+	}
+	return
+}
+
+// GetPathFiles 获取目录所有文件
+func GetPathFiles(absDir string) (re []string) {
+	if CheckFileIsExist(absDir) {
+		files, _ := ioutil.ReadDir(absDir)
+		for _, f := range files {
+			if !f.IsDir() {
+				re = append(re, f.Name())
+			}
+		}
+	}
+	return
+}
+
+// GetModelPath 获取程序运行目录
+func GetModelPath() string {
+	dir, _ := os.Getwd()
+	return strings.Replace(dir, "\\", "/", -1)
+}
+
+// GetCurrentDirectory 获取exe所在目录
+func GetCurrentDirectory() string {
+	dir, _ := os.Executable()
+	exPath := filepath.Dir(dir)
+	// fmt.Println(exPath)
+
+	return strings.Replace(exPath, "\\", "/", -1)
+}
+
+// SaveToFile 写入文件
+func SaveToFile(fname string, src []string, isClear bool) bool {
+	return WriteFile(fname, src, isClear)
+}
+
+// WriteFile 写入文件
+func WriteFile(fname string, src []string, isClear bool) bool {
+	BuildDir(fname)
+	flag := os.O_CREATE | os.O_WRONLY | os.O_TRUNC
+	if !isClear {
+		flag = os.O_CREATE | os.O_RDWR | os.O_APPEND
+	}
+	f, err := os.OpenFile(fname, flag, 0666)
+	if err != nil {
+		mylog.Error(err)
+		return false
+	}
+	defer f.Close()
+
+	for _, v := range src {
+		f.WriteString(v)
+		f.WriteString("\r\n")
+	}
+
+	return true
+}
+
+// WriteFile 写入文件
+func WriteFileEx(fname string, src []byte, isClear bool) bool {
+	flag := os.O_CREATE | os.O_WRONLY | os.O_TRUNC
+	if !isClear {
+		flag = os.O_CREATE | os.O_RDWR | os.O_APPEND
+	}
+	f, err := os.OpenFile(fname, flag, 0666)
+	if err != nil {
+		mylog.Error(err)
+		return false
+	}
+	defer f.Close()
+
+	f.Write(src)
+
+	return true
+}
+
+// ReadFileEx 读取文件
+func ReadFileEx(fname string) []byte {
+	if !CheckFileIsExist(fname) {
+		return []byte{}
+	}
+
+	data, err := os.ReadFile(fname) // 使用 os.ReadFile (Go 1.16+)
+	if err != nil {
+		mylog.Error(err)
+		return []byte{}
+	}
+	return data
+}
+
+// ReadFile 读取文件
+func ReadFile(fname string) (src []string) {
+	f, err := os.OpenFile(fname, os.O_RDONLY, 0666)
+	if err != nil {
+		return []string{}
+	}
+	defer f.Close()
+
+	rd := bufio.NewReader(f)
+	for {
+		line, _, err := rd.ReadLine()
+		if err != nil || io.EOF == err {
+			break
+		}
+		src = append(src, string(line))
+	}
+
+	return src
+}
+
+// MoveFile 移动文件或文件夹(/结尾)
+func MoveFile(from, to string) error {
+	// if !CheckFileIsExist(to) {
+	// 	BuildDir(to)
+	// }
+	return os.Rename(from, to)
+}
+
+func CopyFile(src, des string) error {
+	if !CheckFileIsExist(des) {
+		BuildDir(des)
+	}
+	srcFile, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	defer srcFile.Close()
+
+	desFile, err := os.Create(des)
+	if err != nil {
+		return err
+	}
+	defer desFile.Close()
+
+	_, err = io.Copy(desFile, srcFile)
+	return err
+}
+
+// RenameFile 重命名文件或文件夹
+func RenameFile(oldname, newname string) error {
+	return os.Rename(oldname, newname)
+}

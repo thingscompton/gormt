@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/thingscompton/gormt/data/view/genfunc/model"
-	"github.com/xxjwxc/public/mysqldb"
+	"github.com/thingscompton/gormt/public/mysqldb"
 	"gorm.io/gorm"
 
 	"gorm.io/driver/mysql"

@@ -10,8 +10,8 @@ import (
 	"github.com/thingscompton/gormt/data/config"
 	"github.com/thingscompton/gormt/data/view/cnf"
 	"github.com/thingscompton/gormt/data/view/genfunc"
-	"github.com/xxjwxc/public/mybigcamel"
-	"github.com/xxjwxc/public/tools"
+	"github.com/thingscompton/gormt/public/mybigcamel"
+	"github.com/thingscompton/gormt/public/tools"
 )
 
 // getCamelName Big Hump or Capital Letter.大驼峰或者首字母大写

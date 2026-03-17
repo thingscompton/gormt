@@ -2,7 +2,7 @@ package dlg
 
 import (
 	"github.com/thingscompton/gormt/data/view/genstruct"
-	"github.com/xxjwxc/public/mycui"
+	"github.com/thingscompton/gormt/public/mycui"
 )
 
 const (
