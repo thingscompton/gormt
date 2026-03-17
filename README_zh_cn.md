@@ -30,10 +30,12 @@
 ## 安装
 
 ```
-go get -u -v github.com/xxjwxc/gormt@master
+go install github.com/thingscompton/gormt@latest
 ```
 
-或者: [下载地址](https://github.com/xxjwxc/gormt/releases)
+或者下载预编译二进制: [Releases](https://github.com/thingscompton/gormt/releases/latest)
+
+> **说明：** 本仓库是 [xxjwxc/gormt](https://github.com/xxjwxc/gormt) 的 fork，包含若干 bug 修复。详见下方 [与上游的差异](#与上游的差异)。
 
 ## 1. 通过当前目录 config.yml 文件配置默认配置项
 注意:最新的配置请参考 [MyIni.go](/data/config/MyIni.go), 或使用命令行工具默认生成的。
@@ -238,6 +240,42 @@ CHCP 65001
 
 
 - ###### [传送门](https://xxjwxc.github.io/post/gormtools/)
+
+---
+
+## 与上游的差异
+
+本 fork 修复了尚未合并进 [xxjwxc/gormt](https://github.com/xxjwxc/gormt) 的 bug。
+
+### 修复：使用 `self_type_define` 时 `decimal.Decimal` 的 import 未生成
+
+**问题描述**
+
+通过 `self_type_define` 将 MySQL `decimal` 列映射为 `decimal.Decimal`：
+
+```yml
+self_type_define:
+  decimal: decimal.Decimal
+```
+
+gormt 生成的 struct 字段类型是正确的 `decimal.Decimal`，但始终**不会输出**对应的 import 语句：
+
+```go
+// 生成文件中缺少：
+import "github.com/shopspring/decimal"
+```
+
+导致生成的代码无法编译。
+
+**根本原因**
+
+gormt 的 import 生成逻辑（`genimport()`）通过查询 `data/view/cnf/def.go` 中的硬编码 map `EImportsHead` 来决定需要哪些 import。该 map 中没有 `decimal.Decimal` 的条目，因此无论 `self_type_define` 如何配置（`import_pkgs` 配置项在 gormt 中根本不存在，会被静默忽略），import 语句都不会被生成。
+
+**修复方案**
+
+在 [`data/view/cnf/def.go`](data/view/cnf/def.go) 的 `EImportsHead` 中添加了 `"decimal.Decimal": '"github.com/shopspring/decimal"'`。
+
+---
 
 ## 点赞时间线
 

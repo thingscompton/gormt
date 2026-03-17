@@ -28,10 +28,12 @@
 ## install
 
 ```
-go get -u -v github.com/xxjwxc/gormt@latest
+go install github.com/thingscompton/gormt@latest
 ```
 
-or: [Dowloading](https://github.com/xxjwxc/gormt/releases)
+or download a pre-built binary: [Releases](https://github.com/thingscompton/gormt/releases/latest)
+
+> **Note:** This is a fork of [xxjwxc/gormt](https://github.com/xxjwxc/gormt) with bug fixes applied. See [Changes from upstream](#changes-from-upstream) below.
 
 --------
 
@@ -228,6 +230,42 @@ CHCP 65001
 
 
 - ###### [link](https://xxjwxc.github.io/post/gormtools/)
+
+---
+
+## Changes from upstream
+
+This fork fixes bugs not yet merged into [xxjwxc/gormt](https://github.com/xxjwxc/gormt).
+
+### Fix: `decimal.Decimal` import not generated when using `self_type_define`
+
+**Problem**
+
+When mapping MySQL `decimal` columns to `decimal.Decimal` via `self_type_define`:
+
+```yml
+self_type_define:
+  decimal: decimal.Decimal
+```
+
+gormt correctly used `decimal.Decimal` as the field type in the generated struct, but **never emitted** the corresponding import statement:
+
+```go
+// missing from generated file:
+import "github.com/shopspring/decimal"
+```
+
+The generated code would fail to compile.
+
+**Root cause**
+
+Import generation in gormt works by looking up each resolved Go type in a hardcoded map `EImportsHead` in `data/view/cnf/def.go`. This map did not contain an entry for `decimal.Decimal`, so the import path was never added — regardless of `self_type_define` or the (non-existent) `import_pkgs` config key.
+
+**Fix**
+
+Added `"decimal.Decimal": '"github.com/shopspring/decimal"'` to `EImportsHead` in [`data/view/cnf/def.go`](data/view/cnf/def.go).
+
+---
 
 ## Stargazers over time
 
