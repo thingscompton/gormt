@@ -10,7 +10,7 @@ import (
 	"github.com/thingscompton/gormt/data/config"
 	"github.com/thingscompton/gormt/data/view/model"
 	"github.com/thingscompton/gormt/public/tools"
-	"gorm.io/driver/sqlite"
+	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
 )
 
