@@ -23,6 +23,10 @@ func (m *mysqlModel) GenModel() model.DBInfo {
 	orm := mysqldb.OnInitDBOrm(config.GetMysqlConStr(), 5, 20, true)
 	defer orm.OnDestoryDB()
 
+	if orm.DB == nil {
+		return model.DBInfo{}
+	}
+
 	var dbInfo model.DBInfo
 	m.getPackageInfo(orm, &dbInfo)
 	dbInfo.PackageName = m.GetPkgName()
