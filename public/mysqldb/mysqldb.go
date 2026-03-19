@@ -49,7 +49,12 @@ func (i *MySqlDB) OnGetDBOrm(dataSourceName string, maxIdleConns, maxOpenConns i
 			return nil
 		}
 
-		sqlDB, _ := i.DB.DB()
+		sqlDB, err := i.DB.DB()
+		if err != nil || sqlDB == nil {
+			mylog.Error(myerrors.Wrap(err, "Got error when get db pool"))
+			i.DB = nil
+			return nil
+		}
 		// SetMaxIdleConns sets the maximum number of connections in the idle connection pool.
 		sqlDB.SetMaxIdleConns(maxIdleConns) // 空闲连接池中最大连接数
 
@@ -70,8 +75,9 @@ func (i *MySqlDB) OnGetDBOrm(dataSourceName string, maxIdleConns, maxOpenConns i
 // OnDestoryDB destorydb
 func (i *MySqlDB) OnDestoryDB() {
 	if i.DB != nil {
-		sqldb, _ := i.DB.DB()
-		sqldb.Close()
+		if sqldb, err := i.DB.DB(); err == nil && sqldb != nil {
+			sqldb.Close()
+		}
 		i.DB = nil
 	}
 }

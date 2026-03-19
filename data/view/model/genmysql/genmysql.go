@@ -96,15 +96,14 @@ func (m *mysqlModel) getPackageInfo(orm *mysqldb.MySqlDB, info *model.DBInfo) {
 		if config.GetIsOutSQL() {
 			// Get create SQL statements.获取创建sql语句
 			rows, err := orm.Raw("show create table " + assemblyTable(tabName)).Rows()
-			//defer rows.Close()
-			if err == nil {
+			if err == nil && rows != nil {
 				if rows.Next() {
 					var table, CreateTable string
 					rows.Scan(&table, &CreateTable)
 					tab.SQLBuildStr = CreateTable
 				}
+				rows.Close()
 			}
-			rows.Close()
 			// ----------end
 		}
 

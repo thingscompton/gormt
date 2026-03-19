@@ -29,8 +29,9 @@ func (m *mssqlModel) GenModel() model.DBInfo {
 		return model.DBInfo{}
 	}
 	defer func() {
-		sqldb, _ := db.DB()
-		sqldb.Close()
+		if sqldb, err := db.DB(); err == nil && sqldb != nil {
+			sqldb.Close()
+		}
 	}()
 
 	var dbInfo model.DBInfo
