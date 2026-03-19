@@ -45,6 +45,7 @@ func (i *MySqlDB) OnGetDBOrm(dataSourceName string, maxIdleConns, maxOpenConns i
 			Logger:         Default})                                   // logger.Default
 		if err != nil {
 			mylog.Error(myerrors.Wrap(err, "Got error when connect database:"+dataSourceName))
+			i.DB = nil
 			return nil
 		}
 
